@@ -45,7 +45,8 @@
 - [Overview](#-overview)
 - [Features](#-features)
 - [Live Demo](#-live-demo)
-- [Installation](#-installation)
+- [Download Desktop App](#-download-desktop-app)
+- [Run Locally](#-run-locally-web-version)
 - [Technologies](#-technologies)
 - [Architecture](#-architecture)
 - [Mathematical Foundations](#-mathematical-foundations)
@@ -233,7 +234,46 @@ Neural Network Playground is a **fully interactive, web-based tool** for underst
 
 ---
 
-## 💻 Installation
+## 📥 Download Desktop App
+
+<div align="center">
+
+[![Download](https://img.shields.io/badge/Download-Desktop%20App-blue?style=for-the-badge&logo=desktop)](https://github.com/youssefhajaj/neural-network-playground/releases/latest)
+
+</div>
+
+<table align="center">
+<tr>
+<td align="center">
+<img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"/><br/>
+<b>Windows</b><br/>
+<sub><code>.msi</code> installer</sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/latest">Download</a>
+</td>
+<td align="center">
+<img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/><br/>
+<b>macOS</b><br/>
+<sub><code>.dmg</code> (Intel & Apple Silicon)</sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/latest">Download</a>
+</td>
+<td align="center">
+<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/><br/>
+<b>Linux</b><br/>
+<sub><code>.AppImage</code> / <code>.deb</code></sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/latest">Download</a>
+</td>
+</tr>
+</table>
+
+<br/>
+
+> 💡 **Desktop app features**: Works offline, native performance, no browser required
+
+<br/>
+
+---
+
+## 💻 Run Locally (Web Version)
 
 <details>
 <summary><b>🐍 Option 1: Python HTTP Server</b> (Recommended)</summary>

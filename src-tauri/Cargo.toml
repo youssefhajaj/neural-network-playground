@@ -1,0 +1,27 @@
+[package]
+name = "neural-network-playground"
+version = "1.0.0"
+description = "Interactive neural network visualization tool built from scratch"
+authors = ["Youssef Hajaj"]
+license = "MIT"
+repository = "https://github.com/youssefhajaj/neural-network-playground"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = ["shell-open"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[features]
+default = ["custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

@@ -1,0 +1,157 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-22.04
+    outputs:
+      release_id: ${{ steps.create-release.outputs.result }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create release
+        id: create-release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: context.ref.replace('refs/tags/', '') || `v1.0.0-${Date.now()}`,
+              name: `Neural Network Playground ${context.ref.replace('refs/tags/', '') || 'v1.0.0'}`,
+              body: `## 🧠 Neural Network Playground Desktop App\n\n### Downloads\n\n| Platform | File |\n|----------|------|\n| **Windows** | \`.msi\` installer |\n| **macOS (Apple Silicon)** | \`_aarch64.dmg\` |\n| **macOS (Intel)** | \`_x64.dmg\` |\n| **Linux** | \`.AppImage\` or \`.deb\` |\n\n---\n\n### What's New\n- Desktop application with native performance\n- Works offline\n- All features from the web version\n\n---\n\n**Web Version**: https://skemato.com/nn-playground/`,
+              draft: true,
+              prerelease: false
+            })
+            return data.id
+
+  build-tauri:
+    needs: create-release
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: 'macos-latest'
+            args: '--target aarch64-apple-darwin'
+          - platform: 'macos-latest'
+            args: '--target x86_64-apple-darwin'
+          - platform: 'ubuntu-22.04'
+            args: ''
+          - platform: 'windows-latest'
+            args: ''
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-action@stable
+
+      - name: Add Rust targets (macOS)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          rustup target add aarch64-apple-darwin
+          rustup target add x86_64-apple-darwin
+
+      - name: Install dependencies (Ubuntu)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install npm dependencies
+        run: npm install
+
+      - name: Generate icons
+        run: |
+          npm install -g @aspect-ratio/core 2>/dev/null || true
+          mkdir -p src-tauri/icons
+          # Create placeholder icons using ImageMagick or similar
+          if command -v convert &> /dev/null; then
+            convert -size 32x32 xc:#667eea src-tauri/icons/32x32.png
+            convert -size 128x128 xc:#667eea src-tauri/icons/128x128.png
+            convert -size 256x256 xc:#667eea src-tauri/icons/128x128@2x.png
+            convert -size 256x256 xc:#667eea src-tauri/icons/icon.png
+            convert src-tauri/icons/icon.png src-tauri/icons/icon.ico
+            cp src-tauri/icons/icon.png src-tauri/icons/icon.icns
+          fi
+
+      - name: Install icons (Ubuntu)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get install -y imagemagick
+          convert -size 32x32 xc:#667eea src-tauri/icons/32x32.png
+          convert -size 128x128 xc:#667eea src-tauri/icons/128x128.png
+          convert -size 256x256 xc:#667eea src-tauri/icons/128x128@2x.png
+          convert -size 256x256 xc:#667eea src-tauri/icons/icon.png
+          convert src-tauri/icons/icon.png src-tauri/icons/icon.ico
+          cp src-tauri/icons/icon.png src-tauri/icons/icon.icns
+
+      - name: Install icons (macOS)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          brew install imagemagick
+          convert -size 32x32 xc:#667eea src-tauri/icons/32x32.png
+          convert -size 128x128 xc:#667eea src-tauri/icons/128x128.png
+          convert -size 256x256 xc:#667eea src-tauri/icons/128x128@2x.png
+          convert -size 256x256 xc:#667eea src-tauri/icons/icon.png
+          convert src-tauri/icons/icon.png src-tauri/icons/icon.ico
+          cp src-tauri/icons/icon.png src-tauri/icons/icon.icns
+
+      - name: Install icons (Windows)
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        run: |
+          choco install imagemagick -y
+          refreshenv
+          magick -size 32x32 xc:#667eea src-tauri/icons/32x32.png
+          magick -size 128x128 xc:#667eea src-tauri/icons/128x128.png
+          magick -size 256x256 xc:#667eea src-tauri/icons/128x128@2x.png
+          magick -size 256x256 xc:#667eea src-tauri/icons/icon.png
+          magick src-tauri/icons/icon.png src-tauri/icons/icon.ico
+          Copy-Item src-tauri/icons/icon.png src-tauri/icons/icon.icns
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ needs.create-release.outputs.release_id }}
+          args: ${{ matrix.args }}
+
+  publish-release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-22.04
+    needs: [create-release, build-tauri]
+
+    steps:
+      - name: Publish release
+        uses: actions/github-script@v7
+        env:
+          release_id: ${{ needs.create-release.outputs.release_id }}
+        with:
+          script: |
+            github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: process.env.release_id,
+              draft: false,
+              prerelease: false
+            })

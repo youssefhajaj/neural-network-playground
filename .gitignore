@@ -11,15 +11,19 @@ Thumbs.db
 # Logs
 *.log
 
-# Dependencies (if any added later)
+# Dependencies
 node_modules/
+package-lock.json
 
-# Build output (for future Tauri/Electron builds)
-dist/
-build/
+# Rust/Tauri build output
 target/
 src-tauri/target/
+dist/
+build/
 
 # Environment files
 .env
 .env.local
+
+# Cargo lock (optional for apps)
+Cargo.lock

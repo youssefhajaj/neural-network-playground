@@ -1,0 +1,15 @@
+{
+  "name": "neural-network-playground",
+  "version": "1.0.0",
+  "description": "Interactive neural network visualization tool built from scratch",
+  "author": "Youssef Hajaj",
+  "license": "MIT",
+  "scripts": {
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^1.5.6"
+  }
+}
