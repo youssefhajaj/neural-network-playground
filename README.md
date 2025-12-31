@@ -871,10 +871,6 @@ See [LICENSE](LICENSE) for details.
 
 <br/>
 
-**Built with ❤️ by [Youssef Hajaj](https://github.com/youssefhajaj)**
-
-<br/>
-
-<sub>No TensorFlow was harmed in the making of this project.</sub>
+**by [Youssef Hajaj](https://www.linkedin.com/in/youssef-hajaj/)**
 
 </div>
