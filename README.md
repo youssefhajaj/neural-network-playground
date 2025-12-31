@@ -39,9 +39,6 @@
 
 ## 📋 Table of Contents
 
-<details>
-<summary>Click to expand</summary>
-
 - [Overview](#-overview)
 - [Features](#-features)
 - [Live Demo](#-live-demo)
@@ -58,8 +55,6 @@
 - [Performance](#-performance)
 - [Contributing](#-contributing)
 - [License](#-license)
-
-</details>
 
 <br/>
 
