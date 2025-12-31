@@ -43,8 +43,7 @@
 - [How It Was Built](#-how-it-was-built)
 - [Features](#-features)
 - [Live Demo](#-live-demo)
-- [Download Desktop App](#-download-desktop-app)
-- [Run Locally](#-run-locally-web-version)
+- [Run Locally](#-run-locally)
 - [Technologies](#-technologies)
 - [Architecture](#-architecture)
 - [Mathematical Foundations](#-mathematical-foundations)
@@ -122,8 +121,6 @@ This project was built with a **"from scratch" philosophy** — every mathematic
 | **Logic** | ES6+ JavaScript | Classes, modules, arrow functions, destructuring |
 | **Visualization** | Canvas API | Hardware-accelerated 2D rendering for heatmaps |
 | **Math Rendering** | KaTeX | Fast LaTeX rendering for formulas in UI |
-| **Desktop App** | Tauri (Rust) | 10x smaller than Electron, native performance |
-| **CI/CD** | GitHub Actions | Automated multi-platform builds on every release |
 
 ### 🏗️ Core Modules Built From Scratch
 
@@ -149,80 +146,6 @@ This project was built with a **"from scratch" philosophy** — every mathematic
 │                 │  loss/accuracy charts, weight distribution        │
 └─────────────────┴───────────────────────────────────────────────────┘
 ```
-
-<br/>
-
-### 🖥️ Desktop App Build Process
-
-The desktop application is built using **Tauri**, a Rust-based framework that wraps the web app in a native window.
-
-### Why Tauri over Electron?
-
-| Aspect | Tauri | Electron |
-|--------|:-----:|:--------:|
-| Binary Size | **~8 MB** | ~150 MB |
-| RAM Usage | **~30 MB** | ~150 MB |
-| Backend | Rust | Node.js |
-| Security | Sandboxed | Full Node access |
-| Startup | **Instant** | 2-3 seconds |
-
-### Build Architecture
-
-```
-┌────────────────────────────────────────────────────────────────────┐
-│                        GitHub Actions CI/CD                         │
-├────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│   push tag v*  ──►  Trigger Workflow                               │
-│                          │                                          │
-│         ┌────────────────┼────────────────┐                        │
-│         ▼                ▼                ▼                        │
-│   ┌──────────┐    ┌──────────┐    ┌──────────┐                    │
-│   │  macOS   │    │  Ubuntu  │    │ Windows  │                    │
-│   │ (ARM64)  │    │ (x86_64) │    │ (x86_64) │                    │
-│   │ (x86_64) │    │          │    │          │                    │
-│   └────┬─────┘    └────┬─────┘    └────┬─────┘                    │
-│        │               │               │                           │
-│        ▼               ▼               ▼                           │
-│    .dmg files      .deb/.AppImage   .msi/.exe                      │
-│        │               │               │                           │
-│        └───────────────┼───────────────┘                           │
-│                        ▼                                            │
-│              GitHub Release Assets                                  │
-│                                                                     │
-└────────────────────────────────────────────────────────────────────┘
-```
-
-### Tauri Project Structure
-
-```
-src-tauri/
-├── Cargo.toml          # Rust dependencies
-├── tauri.conf.json     # App config (window size, icons, bundle)
-├── build.rs            # Build script
-└── src/
-    └── main.rs         # Rust entry point (minimal - just loads webview)
-```
-
-<br/>
-
-### 🔄 Development Workflow
-
-```
-1. Write Code        ──►  Pure JS, no transpilation needed
-                          │
-2. Test Locally      ──►  python -m http.server 8000
-                          │
-3. Commit & Push     ──►  git push origin main
-                          │
-4. Create Release    ──►  git tag v1.0.0 && git push origin v1.0.0
-                          │
-5. GitHub Actions    ──►  Automatically builds for all platforms
-                          │
-6. Release Ready     ──►  Download links available on GitHub Releases
-```
-
-**No build step for web version** — The app runs directly from source files. Just open `index.html` with a local server.
 
 <br/>
 
@@ -359,66 +282,7 @@ src-tauri/
 
 ---
 
-## 📥 Download Desktop App
-
-<div align="center">
-
-[![Download](https://img.shields.io/badge/Download-Desktop%20App-blue?style=for-the-badge&logo=desktop)](https://github.com/youssefhajaj/neural-network-playground/releases/latest)
-
-</div>
-
-<table align="center">
-<tr>
-<td align="center">
-<img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"/><br/>
-<b>Windows</b><br/>
-<sub><code>.msi</code> installer</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/Neural.Network.Playground_1.0.0_x64_en-US.msi">⬇️ Download</a>
-</td>
-<td align="center">
-<img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/><br/>
-<b>macOS (Apple Silicon)</b><br/>
-<sub><code>.dmg</code> for M1/M2/M3</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/Neural.Network.Playground_1.0.0_aarch64.dmg">⬇️ Download</a>
-</td>
-<td align="center">
-<img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/><br/>
-<b>macOS (Intel)</b><br/>
-<sub><code>.dmg</code> for Intel Macs</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/Neural.Network.Playground_1.0.0_x64.dmg">⬇️ Download</a>
-</td>
-</tr>
-<tr>
-<td align="center">
-<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/><br/>
-<b>Linux (AppImage)</b><br/>
-<sub>Universal Linux</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/neural-network-playground_1.0.0_amd64.AppImage">⬇️ Download</a>
-</td>
-<td align="center">
-<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/><br/>
-<b>Linux (Debian)</b><br/>
-<sub><code>.deb</code> package</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/neural-network-playground_1.0.0_amd64.deb">⬇️ Download</a>
-</td>
-<td align="center">
-<img src="https://img.shields.io/badge/All-Releases-gray?style=for-the-badge"/><br/>
-<b>All Versions</b><br/>
-<sub>Browse all releases</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases">📋 View All</a>
-</td>
-</tr>
-</table>
-
-<br/>
-
-> 💡 **Desktop app features**: Works offline, native performance, no browser required
-
-<br/>
-
----
-
-## 💻 Run Locally (Web Version)
+## 💻 Run Locally
 
 ### 🐍 Option 1: Python HTTP Server (Recommended)
 
