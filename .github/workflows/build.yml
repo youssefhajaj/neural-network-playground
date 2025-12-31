@@ -10,20 +10,7 @@ jobs:
   build-tauri:
     permissions:
       contents: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: 'macos-latest'
-            args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest'
-            args: '--target x86_64-apple-darwin'
-          - platform: 'ubuntu-22.04'
-            args: ''
-          - platform: 'windows-latest'
-            args: ''
-
-    runs-on: ${{ matrix.platform }}
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -36,19 +23,11 @@ jobs:
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
           workspaces: './src-tauri -> target'
-
-      - name: Install dependencies (Ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.0-dev libayatana-appindicator3-dev librsvg2-dev patchelf
 
       - name: Install npm dependencies
         run: npm install
@@ -64,7 +43,7 @@ jobs:
             ## 🧠 Neural Network Playground Desktop App
 
             ### Downloads
-            Select your platform below to download.
+            - **Windows**: Download the `.msi` installer below
 
             ### What's New
             - Desktop application with native performance
@@ -75,4 +54,3 @@ jobs:
             **Web Version**: https://skemato.com/nn-playground/
           releaseDraft: false
           prerelease: false
-          args: ${{ matrix.args }}
