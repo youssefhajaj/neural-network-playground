@@ -13,7 +13,6 @@ Thumbs.db
 
 # Dependencies
 node_modules/
-package-lock.json
 
 # Rust/Tauri build output
 target/
