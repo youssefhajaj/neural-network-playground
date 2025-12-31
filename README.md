@@ -248,19 +248,39 @@ Neural Network Playground is a **fully interactive, web-based tool** for underst
 <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white"/><br/>
 <b>Windows</b><br/>
 <sub><code>.msi</code> installer</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/latest">Download</a>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/Neural.Network.Playground_1.0.0_x64_en-US.msi">⬇️ Download</a>
 </td>
 <td align="center">
 <img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/><br/>
-<b>macOS</b><br/>
-<sub><code>.dmg</code> (Intel & Apple Silicon)</sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/latest">Download</a>
+<b>macOS (Apple Silicon)</b><br/>
+<sub><code>.dmg</code> for M1/M2/M3</sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/Neural.Network.Playground_1.0.0_aarch64.dmg">⬇️ Download</a>
+</td>
+<td align="center">
+<img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/><br/>
+<b>macOS (Intel)</b><br/>
+<sub><code>.dmg</code> for Intel Macs</sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/Neural.Network.Playground_1.0.0_x64.dmg">⬇️ Download</a>
+</td>
+</tr>
+<tr>
+<td align="center">
+<img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/><br/>
+<b>Linux (AppImage)</b><br/>
+<sub>Universal Linux</sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/neural-network-playground_1.0.0_amd64.AppImage">⬇️ Download</a>
 </td>
 <td align="center">
 <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/><br/>
-<b>Linux</b><br/>
-<sub><code>.AppImage</code> / <code>.deb</code></sub><br/>
-<a href="https://github.com/youssefhajaj/neural-network-playground/releases/latest">Download</a>
+<b>Linux (Debian)</b><br/>
+<sub><code>.deb</code> package</sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases/download/v1.0.0/neural-network-playground_1.0.0_amd64.deb">⬇️ Download</a>
+</td>
+<td align="center">
+<img src="https://img.shields.io/badge/All-Releases-gray?style=for-the-badge"/><br/>
+<b>All Versions</b><br/>
+<sub>Browse all releases</sub><br/>
+<a href="https://github.com/youssefhajaj/neural-network-playground/releases">📋 View All</a>
 </td>
 </tr>
 </table>
