@@ -5,11 +5,9 @@
   "author": "Youssef Hajaj",
   "license": "MIT",
   "scripts": {
-    "tauri": "tauri",
-    "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri": "tauri"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.5.6"
+    "@tauri-apps/cli": "^1.5.11"
   }
 }

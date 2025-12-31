@@ -33,31 +33,45 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+
       - name: Install dependencies (Ubuntu)
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf imagemagick
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Install dependencies (macOS)
-        if: matrix.platform == 'macos-latest'
-        run: brew install imagemagick
+      - name: Install npm dependencies
+        run: npm install
 
-      - name: Install dependencies (Windows)
-        if: matrix.platform == 'windows-latest'
-        shell: pwsh
-        run: choco install imagemagick -y
+      - name: Create icons directory
+        run: mkdir -p src-tauri/icons
 
-      - name: Generate icons (Unix)
-        if: matrix.platform != 'windows-latest'
+      - name: Generate icons (Ubuntu)
+        if: matrix.platform == 'ubuntu-22.04'
         run: |
-          mkdir -p src-tauri/icons
+          sudo apt-get install -y imagemagick
+          convert -size 32x32 xc:#667eea src-tauri/icons/32x32.png
+          convert -size 128x128 xc:#667eea src-tauri/icons/128x128.png
+          convert -size 256x256 xc:#667eea src-tauri/icons/128x128@2x.png
+          convert -size 512x512 xc:#667eea src-tauri/icons/icon.png
+          convert src-tauri/icons/icon.png src-tauri/icons/icon.ico
+          cp src-tauri/icons/icon.png src-tauri/icons/icon.icns
+
+      - name: Generate icons (macOS)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          brew install imagemagick
           convert -size 32x32 xc:#667eea src-tauri/icons/32x32.png
           convert -size 128x128 xc:#667eea src-tauri/icons/128x128.png
           convert -size 256x256 xc:#667eea src-tauri/icons/128x128@2x.png
@@ -69,17 +83,15 @@ jobs:
         if: matrix.platform == 'windows-latest'
         shell: pwsh
         run: |
-          $env:Path = "C:\Program Files\ImageMagick-7.1.1-Q16-HDRI;$env:Path"
-          New-Item -ItemType Directory -Force -Path src-tauri/icons
+          choco install imagemagick -y --no-progress
+          refreshenv
+          $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
           magick -size 32x32 xc:#667eea src-tauri/icons/32x32.png
           magick -size 128x128 xc:#667eea src-tauri/icons/128x128.png
           magick -size 256x256 xc:#667eea src-tauri/icons/128x128@2x.png
           magick -size 512x512 xc:#667eea src-tauri/icons/icon.png
-          magick src-tauri/icons/icon.png src-tauri/icons/icon.ico
+          magick convert src-tauri/icons/icon.png src-tauri/icons/icon.ico
           Copy-Item src-tauri/icons/icon.png src-tauri/icons/icon.icns
-
-      - name: Install npm dependencies
-        run: npm install
 
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
