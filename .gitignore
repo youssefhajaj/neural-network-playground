@@ -1,0 +1,25 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Dependencies (if any added later)
+node_modules/
+
+# Build output (for future Tauri/Electron builds)
+dist/
+build/
+target/
+src-tauri/target/
+
+# Environment files
+.env
+.env.local
