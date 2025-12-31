@@ -40,6 +40,7 @@
 ## 📋 Table of Contents
 
 - [Overview](#-overview)
+- [How It Was Built](#-how-it-was-built)
 - [Features](#-features)
 - [Live Demo](#-live-demo)
 - [Download Desktop App](#-download-desktop-app)
@@ -93,6 +94,149 @@ Neural Network Playground is a **fully interactive, web-based tool** for underst
 </td>
 </tr>
 </table>
+
+<br/>
+
+---
+
+## 🔨 How It Was Built
+
+<details open>
+<summary><b>💡 Development Philosophy</b></summary>
+
+<br/>
+
+This project was built with a **"from scratch" philosophy** — every mathematical operation, every algorithm, and every optimization technique was implemented manually without relying on machine learning frameworks.
+
+**Why build from scratch?**
+- 🎓 **Deep Understanding** — Writing backpropagation by hand teaches you what PyTorch hides
+- 🔍 **Full Transparency** — Every line of code is visible and debuggable
+- 📦 **Zero Dependencies** — No `npm install` headaches, no version conflicts
+- ⚡ **Lightweight** — Total codebase is ~232KB vs hundreds of MB for ML frameworks
+
+</details>
+
+<details open>
+<summary><b>🛠️ Tech Stack Deep Dive</b></summary>
+
+<br/>
+
+| Layer | Technology | Why This Choice |
+|-------|------------|-----------------|
+| **Frontend** | Vanilla HTML5 | Semantic structure, no build step needed |
+| **Styling** | Pure CSS3 | Custom properties, flexbox/grid, zero frameworks |
+| **Logic** | ES6+ JavaScript | Classes, modules, arrow functions, destructuring |
+| **Visualization** | Canvas API | Hardware-accelerated 2D rendering for heatmaps |
+| **Math Rendering** | KaTeX | Fast LaTeX rendering for formulas in UI |
+| **Desktop App** | Tauri (Rust) | 10x smaller than Electron, native performance |
+| **CI/CD** | GitHub Actions | Automated multi-platform builds on every release |
+
+### 🏗️ Core Modules Built From Scratch
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    CUSTOM IMPLEMENTATIONS                            │
+├─────────────────┬───────────────────────────────────────────────────┤
+│  matrix.js      │  Matrix class with multiply, transpose, hadamard, │
+│                 │  add, subtract, map, Xavier/He initialization     │
+├─────────────────┼───────────────────────────────────────────────────┤
+│  network.js     │  Full feedforward network: forward prop, backward │
+│                 │  prop, batch training, dropout, L2 regularization │
+├─────────────────┼───────────────────────────────────────────────────┤
+│  optimizers.js  │  SGD, Momentum, RMSprop, Adam with bias correction│
+├─────────────────┼───────────────────────────────────────────────────┤
+│  activations.js │  Sigmoid, Tanh, ReLU, Leaky ReLU, ELU, Swish      │
+│                 │  + all derivatives for backpropagation            │
+├─────────────────┼───────────────────────────────────────────────────┤
+│  datasets.js    │  XOR, Circle, Spiral, Moons, Clusters, Rings      │
+│                 │  with configurable noise and sample size          │
+├─────────────────┼───────────────────────────────────────────────────┤
+│  visualizer.js  │  Network diagram, decision boundary heatmap,      │
+│                 │  loss/accuracy charts, weight distribution        │
+└─────────────────┴───────────────────────────────────────────────────┘
+```
+
+</details>
+
+<details open>
+<summary><b>🖥️ Desktop App Build Process</b></summary>
+
+<br/>
+
+The desktop application is built using **Tauri**, a Rust-based framework that wraps the web app in a native window.
+
+### Why Tauri over Electron?
+
+| Aspect | Tauri | Electron |
+|--------|:-----:|:--------:|
+| Binary Size | **~8 MB** | ~150 MB |
+| RAM Usage | **~30 MB** | ~150 MB |
+| Backend | Rust | Node.js |
+| Security | Sandboxed | Full Node access |
+| Startup | **Instant** | 2-3 seconds |
+
+### Build Architecture
+
+```
+┌────────────────────────────────────────────────────────────────────┐
+│                        GitHub Actions CI/CD                         │
+├────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│   push tag v*  ──►  Trigger Workflow                               │
+│                          │                                          │
+│         ┌────────────────┼────────────────┐                        │
+│         ▼                ▼                ▼                        │
+│   ┌──────────┐    ┌──────────┐    ┌──────────┐                    │
+│   │  macOS   │    │  Ubuntu  │    │ Windows  │                    │
+│   │ (ARM64)  │    │ (x86_64) │    │ (x86_64) │                    │
+│   │ (x86_64) │    │          │    │          │                    │
+│   └────┬─────┘    └────┬─────┘    └────┬─────┘                    │
+│        │               │               │                           │
+│        ▼               ▼               ▼                           │
+│    .dmg files      .deb/.AppImage   .msi/.exe                      │
+│        │               │               │                           │
+│        └───────────────┼───────────────┘                           │
+│                        ▼                                            │
+│              GitHub Release Assets                                  │
+│                                                                     │
+└────────────────────────────────────────────────────────────────────┘
+```
+
+### Tauri Project Structure
+
+```
+src-tauri/
+├── Cargo.toml          # Rust dependencies
+├── tauri.conf.json     # App config (window size, icons, bundle)
+├── build.rs            # Build script
+└── src/
+    └── main.rs         # Rust entry point (minimal - just loads webview)
+```
+
+</details>
+
+<details open>
+<summary><b>🔄 Development Workflow</b></summary>
+
+<br/>
+
+```
+1. Write Code        ──►  Pure JS, no transpilation needed
+                          │
+2. Test Locally      ──►  python -m http.server 8000
+                          │
+3. Commit & Push     ──►  git push origin main
+                          │
+4. Create Release    ──►  git tag v1.0.0 && git push origin v1.0.0
+                          │
+5. GitHub Actions    ──►  Automatically builds for all platforms
+                          │
+6. Release Ready     ──►  Download links available on GitHub Releases
+```
+
+**No build step for web version** — The app runs directly from source files. Just open `index.html` with a local server.
+
+</details>
 
 <br/>
 
