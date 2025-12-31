@@ -101,10 +101,7 @@ Neural Network Playground is a **fully interactive, web-based tool** for underst
 
 ## 🔨 How It Was Built
 
-<details open>
-<summary><b>💡 Development Philosophy</b></summary>
-
-<br/>
+### 💡 Development Philosophy
 
 This project was built with a **"from scratch" philosophy** — every mathematical operation, every algorithm, and every optimization technique was implemented manually without relying on machine learning frameworks.
 
@@ -114,12 +111,9 @@ This project was built with a **"from scratch" philosophy** — every mathematic
 - 📦 **Zero Dependencies** — No `npm install` headaches, no version conflicts
 - ⚡ **Lightweight** — Total codebase is ~232KB vs hundreds of MB for ML frameworks
 
-</details>
-
-<details open>
-<summary><b>🛠️ Tech Stack Deep Dive</b></summary>
-
 <br/>
+
+### 🛠️ Tech Stack Deep Dive
 
 | Layer | Technology | Why This Choice |
 |-------|------------|-----------------|
@@ -156,12 +150,9 @@ This project was built with a **"from scratch" philosophy** — every mathematic
 └─────────────────┴───────────────────────────────────────────────────┘
 ```
 
-</details>
-
-<details open>
-<summary><b>🖥️ Desktop App Build Process</b></summary>
-
 <br/>
+
+### 🖥️ Desktop App Build Process
 
 The desktop application is built using **Tauri**, a Rust-based framework that wraps the web app in a native window.
 
@@ -213,12 +204,9 @@ src-tauri/
     └── main.rs         # Rust entry point (minimal - just loads webview)
 ```
 
-</details>
-
-<details open>
-<summary><b>🔄 Development Workflow</b></summary>
-
 <br/>
+
+### 🔄 Development Workflow
 
 ```
 1. Write Code        ──►  Pure JS, no transpilation needed
@@ -235,8 +223,6 @@ src-tauri/
 ```
 
 **No build step for web version** — The app runs directly from source files. Just open `index.html` with a local server.
-
-</details>
 
 <br/>
 
@@ -434,10 +420,7 @@ src-tauri/
 
 ## 💻 Run Locally (Web Version)
 
-<details>
-<summary><b>🐍 Option 1: Python HTTP Server</b> (Recommended)</summary>
-
-<br/>
+### 🐍 Option 1: Python HTTP Server (Recommended)
 
 ```bash
 # Clone the repository
@@ -455,12 +438,7 @@ python -m SimpleHTTPServer 8000
 
 Open **http://localhost:8000** in your browser.
 
-</details>
-
-<details>
-<summary><b>📦 Option 2: Node.js HTTP Server</b></summary>
-
-<br/>
+### 📦 Option 2: Node.js HTTP Server
 
 ```bash
 # Clone the repository
@@ -476,12 +454,7 @@ http-server -p 8000
 
 Open **http://localhost:8000** in your browser.
 
-</details>
-
-<details>
-<summary><b>🐘 Option 3: PHP Built-in Server</b></summary>
-
-<br/>
+### 🐘 Option 3: PHP Built-in Server
 
 ```bash
 # Clone the repository
@@ -494,24 +467,14 @@ php -S localhost:8000
 
 Open **http://localhost:8000** in your browser.
 
-</details>
-
-<details>
-<summary><b>🆚 Option 4: VS Code Live Server</b></summary>
-
-<br/>
+### 🆚 Option 4: VS Code Live Server
 
 1. Clone the repository
 2. Open folder in VS Code
 3. Install **"Live Server"** extension
 4. Right-click `index.html` → **"Open with Live Server"**
 
-</details>
-
-<details>
-<summary><b>🐳 Option 5: Docker</b></summary>
-
-<br/>
+### 🐳 Option 5: Docker
 
 ```bash
 # Clone the repository
@@ -523,8 +486,6 @@ docker run -d -p 8080:80 -v $(pwd):/usr/share/nginx/html:ro nginx:alpine
 ```
 
 Open **http://localhost:8080** in your browser.
-
-</details>
 
 <br/>
 
@@ -626,10 +587,7 @@ neural-network-playground/
 
 ## 📐 Mathematical Foundations
 
-<details open>
-<summary><b>🔄 Forward Propagation</b></summary>
-
-<br/>
+### 🔄 Forward Propagation
 
 For each layer *l* in the network:
 
@@ -647,12 +605,7 @@ Where:
 | $z^{[l]}$ | Pre-activation (linear transform) |
 | $a^{[l]}$ | Post-activation output |
 
-</details>
-
-<details>
-<summary><b>⬅️ Backward Propagation</b></summary>
-
-<br/>
+### ⬅️ Backward Propagation
 
 **Output Layer Error (MSE):**
 
@@ -668,12 +621,7 @@ $$\frac{\partial \mathcal{L}}{\partial W^{[l]}} = \delta^{[l]} \cdot (a^{[l-1]})
 
 $$\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \delta^{[l]}$$
 
-</details>
-
-<details>
-<summary><b>⚡ Activation Functions</b></summary>
-
-<br/>
+### ⚡ Activation Functions
 
 | Function | Formula $f(x)$ | Derivative $f'(x)$ |
 |:--------:|:--------------:|:------------------:|
@@ -684,12 +632,7 @@ $$\frac{\partial \mathcal{L}}{\partial b^{[l]}} = \delta^{[l]}$$
 | **ELU** | $\begin{cases} x & x > 0 \\ \alpha(e^x - 1) & x \leq 0 \end{cases}$ | $\begin{cases} 1 & x > 0 \\ f(x) + \alpha & x \leq 0 \end{cases}$ |
 | **Swish** | $x \cdot \sigma(x)$ | $\sigma(x) + x \cdot \sigma(x)(1 - \sigma(x))$ |
 
-</details>
-
-<details>
-<summary><b>📉 Loss Function</b></summary>
-
-<br/>
+### 📉 Loss Function
 
 **Mean Squared Error (MSE):**
 
@@ -699,19 +642,14 @@ $$\mathcal{L}_{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
 
 $$\mathcal{L}_{total} = \mathcal{L}_{MSE} + \frac{\lambda}{2} \sum_{l} \|W^{[l]}\|_F^2$$
 
-</details>
+### 🚀 Optimizers
 
-<details>
-<summary><b>🚀 Optimizers</b></summary>
-
-<br/>
-
-### SGD (Stochastic Gradient Descent)
+#### SGD (Stochastic Gradient Descent)
 $$W = W - \eta \cdot \nabla_W \mathcal{L}$$
 
 ---
 
-### Momentum
+#### Momentum
 $$v_t = \beta \cdot v_{t-1} + \eta \cdot \nabla_W \mathcal{L}$$
 $$W = W - v_t$$
 
@@ -719,7 +657,7 @@ $$W = W - v_t$$
 
 ---
 
-### RMSprop
+#### RMSprop
 $$s_t = \rho \cdot s_{t-1} + (1 - \rho) \cdot (\nabla_W \mathcal{L})^2$$
 $$W = W - \frac{\eta}{\sqrt{s_t + \epsilon}} \cdot \nabla_W \mathcal{L}$$
 
@@ -727,7 +665,7 @@ $$W = W - \frac{\eta}{\sqrt{s_t + \epsilon}} \cdot \nabla_W \mathcal{L}$$
 
 ---
 
-### Adam (Adaptive Moment Estimation)
+#### Adam (Adaptive Moment Estimation)
 $$m_t = \beta_1 \cdot m_{t-1} + (1 - \beta_1) \cdot \nabla_W \mathcal{L}$$
 $$v_t = \beta_2 \cdot v_{t-1} + (1 - \beta_2) \cdot (\nabla_W \mathcal{L})^2$$
 
@@ -739,29 +677,19 @@ $$W = W - \frac{\eta \cdot \hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon}$$
 
 *Where* $\beta_1 = 0.9$, $\beta_2 = 0.999$, $\epsilon = 10^{-8}$
 
-</details>
+### 🎯 Weight Initialization
 
-<details>
-<summary><b>🎯 Weight Initialization</b></summary>
-
-<br/>
-
-### Xavier/Glorot (for Sigmoid, Tanh)
+#### Xavier/Glorot (for Sigmoid, Tanh)
 
 $$W \sim \mathcal{U}\left(-\sqrt{\frac{6}{n_{in} + n_{out}}}, \sqrt{\frac{6}{n_{in} + n_{out}}}\right)$$
 
-### He (for ReLU variants)
+#### He (for ReLU variants)
 
 $$W \sim \mathcal{N}\left(0, \sqrt{\frac{2}{n_{in}}}\right)$$
 
-</details>
+### 🛡️ Regularization
 
-<details>
-<summary><b>🛡️ Regularization</b></summary>
-
-<br/>
-
-### L2 Regularization (Weight Decay)
+#### L2 Regularization (Weight Decay)
 
 **Loss modification:**
 $$\mathcal{L}_{reg} = \mathcal{L} + \frac{\lambda}{2} \sum_{l} \sum_{i,j} (W_{ij}^{[l]})^2$$
@@ -771,7 +699,7 @@ $$\frac{\partial \mathcal{L}_{reg}}{\partial W} = \frac{\partial \mathcal{L}}{\p
 
 ---
 
-### Dropout (Inverted)
+#### Dropout (Inverted)
 
 **During Training:**
 1. Generate mask: $M_{ij} \sim \text{Bernoulli}(1-p)$
@@ -779,8 +707,6 @@ $$\frac{\partial \mathcal{L}_{reg}}{\partial W} = \frac{\partial \mathcal{L}}{\p
 
 **During Inference:**
 - No dropout (scaling already handled)
-
-</details>
 
 <br/>
 
@@ -821,8 +747,7 @@ Memory:      105 × 3 × 8 bytes ≈ 2.5 KB (weights + m + v, float64)
 
 ## 📁 Code Structure
 
-<details>
-<summary><b>Matrix Operations</b> — <code>matrix.js</code></summary>
+### Matrix Operations — `matrix.js`
 
 ```javascript
 class Matrix {
@@ -856,10 +781,7 @@ class Matrix {
 }
 ```
 
-</details>
-
-<details>
-<summary><b>Neural Network</b> — <code>network.js</code></summary>
+### Neural Network — `network.js`
 
 ```javascript
 class NeuralNetwork {
@@ -889,10 +811,7 @@ class NeuralNetwork {
 }
 ```
 
-</details>
-
-<details>
-<summary><b>Optimizers</b> — <code>optimizers.js</code></summary>
+### Optimizers — `optimizers.js`
 
 ```javascript
 class Optimizer {
@@ -908,8 +827,6 @@ class Adam extends Optimizer { }
 // Factory
 Optimizers.create('adam', 0.001)
 ```
-
-</details>
 
 <br/>
 
